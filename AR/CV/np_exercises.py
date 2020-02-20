@@ -58,9 +58,123 @@ def ex13():
 def ex14():
     arr = np.random.randint(0,100,25)
     arr = arr.reshape(5,5)
-    #(arr[1, :]).mean() IN PROGRESS
     print(arr)
-    print(average1)
+
+    m1 = arr[0,:].mean()
+    arr[0,:] = arr[0,:] - m1
+
+    m2 = arr[1,:].mean()
+    arr[1,:] = arr[1,:] - m2
+    
+    m3 = arr[2,:].mean()
+    arr[2,:] = arr[2,:] - m3
+
+    m4 = arr[3,:].mean()
+    arr[3,:] = arr[3,:] - m4
+
+    m5 = arr[4,:].mean()
+    arr[4,:] = arr[4,:] - m5
+
+    print(arr)
 
 
-ex14()
+def ex15():
+    arr = np.random.uniform(0,25,25)
+    arr = arr.reshape(5,5)
+    a = 0.5
+    index = (np.abs(arr-a)).argmin()
+    print(arr)
+    arr = arr.flatten()
+    print(arr[index])
+
+
+def ex16():
+    arr = np.random.randint(0,10,27)
+    arr = arr.reshape(3,3,3)
+
+    greater = arr[arr>5]
+    print(greater)
+    print(np.prod(greater.shape))
+
+def ex17():
+    arr = np.zeros(shape=(64, 64))
+    a = np.arange(0,255, 4)
+    arr = arr + a
+    arr = np.uint8(arr)
+
+    cv2.imshow('Gradient', arr)
+    k = cv2.waitKey(0)
+
+    if k == 27:
+        cv2.destroyAllWindows()
+    elif k == ord('s'):
+        cv2.destroyAllWindows()
+
+
+def ex18():
+    arr = np.zeros(shape=(64, 64))
+    a = np.arange(0,255, 4)
+    arr = arr + a
+    arr = np.flip(arr, 1)
+    arr = np.rot90(arr)
+    arr = np.uint8(arr)
+
+    cv2.imshow('Gradient', arr)
+    k = cv2.waitKey(0)
+
+    if k == 27:
+        cv2.destroyAllWindows()
+    elif k == ord('s'):
+        cv2.destroyAllWindows()
+
+def ex19():
+    arr = np.zeros(shape=(64, 64, 3))
+    arr[:] = 255
+    arr[:, :, 0] = 0
+    arr = np.uint8(arr)
+
+    cv2.imshow('Yellow', arr)
+    k = cv2.waitKey(0)
+
+    if k == 27:
+        cv2.destroyAllWindows()
+    elif k == ord('s'):
+        cv2.destroyAllWindows()
+
+def ex20():
+    arr = np.zeros(shape=(64, 64, 3))
+    arr[:] = 255
+    arr[0:31, 0:31, 0] = 0
+    arr[32:64, 32:64, 2] = 0
+    arr = np.uint8(arr)
+
+    cv2.imshow('Squares', arr)
+    k = cv2.waitKey(0)
+
+    if k == 27:
+        cv2.destroyAllWindows()
+    elif k == ord('s'):
+        cv2.destroyAllWindows()
+
+
+def ex21():
+    img = cv2.imread('marvel.png')
+    size = img.shape
+    height = size[0]
+    width = size[1]
+
+    i = 1
+    while i<height:
+        cv2.line(img, (0,i), (width,i), (0,0,0), 1)
+        i += 2
+
+    cv2.imshow('Lines', img)
+    k = cv2.waitKey(0)
+
+    if k == 27:
+        cv2.destroyAllWindows()
+    elif k == ord('s'):
+        cv2.destroyAllWindows()
+
+
+ex21()
