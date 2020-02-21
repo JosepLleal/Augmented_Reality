@@ -79,8 +79,7 @@ def ex14():
 
 
 def ex15():
-    arr = np.random.uniform(0,25,25)
-    arr = arr.reshape(5,5)
+    arr = np.random.uniform(0,1,(5,5))
     a = 0.5
     index = (np.abs(arr-a)).argmin()
     print(arr)
@@ -89,43 +88,33 @@ def ex15():
 
 
 def ex16():
-    arr = np.random.randint(0,10,27)
-    arr = arr.reshape(3,3,3)
+    arr = np.random.randint(0,10,9)
+    arr = arr.reshape(3,3)
 
     greater = arr[arr>5]
     print(greater)
-    print(np.prod(greater.shape))
+    print(len(greater))
 
 def ex17():
-    arr = np.zeros(shape=(64, 64))
+    arr = np.zeros((64, 64))
     a = np.arange(0,255, 4)
     arr = arr + a
     arr = np.uint8(arr)
 
     cv2.imshow('Gradient', arr)
-    k = cv2.waitKey(0)
-
-    if k == 27:
-        cv2.destroyAllWindows()
-    elif k == ord('s'):
-        cv2.destroyAllWindows()
+    cv2.waitKey(0)
 
 
 def ex18():
     arr = np.zeros(shape=(64, 64))
     a = np.arange(0,255, 4)
+    a = a.reshape((64,1))
     arr = arr + a
-    arr = np.flip(arr, 1)
-    arr = np.rot90(arr)
     arr = np.uint8(arr)
 
     cv2.imshow('Gradient', arr)
-    k = cv2.waitKey(0)
+    cv2.waitKey(0)
 
-    if k == 27:
-        cv2.destroyAllWindows()
-    elif k == ord('s'):
-        cv2.destroyAllWindows()
 
 def ex19():
     arr = np.zeros(shape=(64, 64, 3))
@@ -134,12 +123,8 @@ def ex19():
     arr = np.uint8(arr)
 
     cv2.imshow('Yellow', arr)
-    k = cv2.waitKey(0)
+    cv2.waitKey(0)
 
-    if k == 27:
-        cv2.destroyAllWindows()
-    elif k == ord('s'):
-        cv2.destroyAllWindows()
 
 def ex20():
     arr = np.zeros(shape=(64, 64, 3))
@@ -158,23 +143,11 @@ def ex20():
 
 
 def ex21():
-    img = cv2.imread('marvel.png')
-    size = img.shape
-    height = size[0]
-    width = size[1]
+    img = cv2.imread('marvel.png', cv2.IMREAD_ANYCOLOR)
 
-    i = 1
-    while i<height:
-        cv2.line(img, (0,i), (width,i), (0,0,0), 1)
-        i += 2
+    img[::2, :] = 0.0
 
     cv2.imshow('Lines', img)
-    k = cv2.waitKey(0)
-
-    if k == 27:
-        cv2.destroyAllWindows()
-    elif k == ord('s'):
-        cv2.destroyAllWindows()
-
+    cv2.waitKey(0)
 
 ex21()
