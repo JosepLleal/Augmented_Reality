@@ -150,4 +150,89 @@ def ex21():
     cv2.imshow('Lines', img)
     cv2.waitKey(0)
 
-ex21()
+#------------------------------------------------------------------------------------------------
+
+def convolve(img, krn, ksize, krad):
+
+    height, width, depth = img.shape
+    
+    frm = np.ones((height + krad*2,                   
+     width + krad*2,
+     depth))
+    frm[krad: -krad, krad: -krad] = img
+
+    #filteted image(output)
+    filter = np.zeros(img.shape)
+    for i in range (0, height):
+        for j in range (0,width):
+            filter[i,j] = (frm[i:i+ksize, j:j+ksize]*krn[:,:,np.newaxis]).sum(axis=(0,1))
+
+
+    return filter
+
+
+
+def GaussKernel(krad):
+
+    ksize = krad*2+1
+    krn = np.zeros((ksize, ksize))
+    sigma = krad/3
+
+    for i in range(0, ksize):
+        for j in range(0,ksize):
+            d = np.sqrt((krad - i)**2 + (krad - j)**2)
+            krn[i,j] = np.exp(-(d**2/(2.0*sigma**2)))
+
+    krn /= krn.sum()
+
+    return krn
+
+
+#Gradients Computation
+def GaussianFilter(img):
+    ksize = 31
+    krad = int(ksize/2)
+    krn = GaussKernel(krad)
+
+    return convolve(img, krn, ksize, krad)
+
+def ConvolveGrayScale(img, krn):
+
+
+
+    return
+
+def SobelFilter(img):
+
+    hkrn = np.array([
+        [-1, 0, 1],
+        [-2, 0, 2],
+        [-1, 0, 1]])
+
+    vkrn = np.array([  
+        [-1, -2, -1],
+        [ 0,  0,  0],
+        [ 1,  2,  1]])
+      
+    
+    Gx = ConvolveGrayScale(img, hkrn)
+    Gy = ConvolveGrayScale(img, vkrn)
+
+    return Gx, Gy
+
+
+def main():
+    img = cv2.imread("marvel.png", cv2.IMREAD_ANYCOLOR)
+    img = img / 255.0
+
+    filtered = GaussianFilter(img)
+
+
+
+    cv2.imshow("Original",img)
+    cv2.imshow("Filtered", filtered)
+
+    cv2.waitKey(0)
+
+main()
+
